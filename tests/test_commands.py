@@ -1,12 +1,17 @@
 import os
 import sys
+from pathlib import Path
 
 import pytest
 
 
+def get_mqttwarn_path():
+    return Path(sys.executable).parent / Path("mqttwarn")
+
+
 def test_command_dump_config(capfd):
 
-    command = "mqttwarn make-config"
+    command = "{} make-config".format(get_mqttwarn_path())
 
     os.system(command)
     stdout = capfd.readouterr().out
@@ -16,7 +21,7 @@ def test_command_dump_config(capfd):
 
 def test_command_dump_samplefuncs(capfd):
 
-    command = "mqttwarn make-samplefuncs"
+    command = "{} make-samplefuncs".format(get_mqttwarn_path())
 
     os.system(command)
     stdout = capfd.readouterr().out
@@ -30,7 +35,7 @@ def test_command_standalone_plugin(capfd):
     if sys.platform.startswith("win"):
         raise pytest.xfail("Skipping test, fails on Windows")
 
-    command = """mqttwarn --plugin=log --options='{"message": "Hello world", "addrs": ["crit"]}'"""
+    command = """{} --plugin=log --options='{}'""".format(get_mqttwarn_path(), '{"message": "Hello world", "addrs": ["crit"]}')
 
     os.system(command)
     stderr = capfd.readouterr().err

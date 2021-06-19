@@ -6,6 +6,8 @@ mqttwarn changelog
 in progress
 ===========
 
+- Improve support for VSCode
+
 
 2021-06-19 0.26.1
 =================
